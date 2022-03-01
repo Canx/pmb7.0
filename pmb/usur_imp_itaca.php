@@ -69,6 +69,18 @@ switch ($categor)
                         exit("Campos $camposAlu"); //Se muestra mensaje advirtiendo que el fichero no tiene la estructura correcta
                         exit("<b><center>$msg[usur_imp_a]</center></b>");
                     }
+                    
+		    // Añadir campo empr_grupo si no existe
+                    $sql = "SELECT column_name from INFORMATION_SCHEMA.columns where table_schema='pmb' and table_name='empr' AND column_name='empr_grupo'";
+                    $existeGrupo = @pmb_mysql_num_rows(@pmb_mysql_query($sql, $dbh));
+		    
+
+                    // Si el campo empr_grupo no existe se crea
+                    if (! $existeGrupo)
+                    {
+                       $sql = "ALTER TABLE empr ADD empr_grupo varchar(15)";
+                       $insert = @pmb_mysql_query($sql, $dbh);
+                    }
 
                     //Si la tabla esta vacia se utilizará el NIA como identificador
                     $tipo_user = 0;
@@ -76,16 +88,6 @@ switch ($categor)
                     if ($vacia != 0)
                     {
                         $idused = identificador_usado($totAlu, $camposAlu, $dbh);
-
-                        // Añadir campo empr_grupo si no existe
-                        $sql = "SELECT column_name from INFORMATION_SCHEMA.columns where table_schema='pmb' and table_name='empr' AND column_name='empr_grupo'";
-                        $existeGrupo = @pmb_mysql_query($sql, $dbh);
-                        // Si el campo empr_grupo no existe se crea
-                        if (@pmb_mysql_num_rows($existeGrupo) == 0)
-                        {
-                            $sql = "ALTER TABLE empr ADD empr_grupo varchar(15)";
-                            $insert = @pmb_mysql_query($sql, $dbh);
-                        }
 
                         if ($idused == "Exp")
                         {
