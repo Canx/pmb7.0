@@ -234,11 +234,28 @@ function sacaCamposItacaAlu($archivo, $ide)
     return [$vectorA, $data];
 }
 
+function sacaCamposItacaProfOld($archivo)
+{
+    $all_data = sacaCamposItacaProf($archivo);
+    return $all_data[0]; // Solo devolvemos la parte antigua
+
+}
+
+function sacaCamposItacaProfNew($archivo)
+{
+    $all_data = sacaCamposItacaProf($archivo);
+    return $all_data[1]; // Solo devolvemos la parte nueva
+
+}
+
 function sacaCamposItacaProf($archivo)
 {
 
     $vectorP = array();
     $indice = 0;
+
+    // Array asociativo de transición
+    $data = array();
 
     /*Instancio la clase DOM que nos permitira operar con el XML*/
     $doc = new DOMDocument();
@@ -274,10 +291,19 @@ function sacaCamposItacaProf($archivo)
         $vectorP[$indice + 2] = utf8_decode(trim($nombre));
         //$vector[$indice+17] = "va_ES";
         $indice = $i;
+
+	$data[$nif] = array(
+            "nombre" => utf8_decode(trim($nombre)) ,
+            "apellidos" => utf8_decode(trim($apellido)) ,
+            "grupo" => ""   // Los profes no tienen grupo
+        );
+
     }
 
     $vectorP[$indice] = "Campo vacio"; // Lo añadimos para hacerlo compatible con la importacion del fichero plano del GESCEN
-    return $vectorP;
+
+    // Devolvemos el vector antiguo y el array asociativo nuevo de transición.
+    return [$vectorP, $data];
 }
 
 //Funcion para insertar los datos en la base de datos

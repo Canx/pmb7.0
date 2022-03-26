@@ -54,11 +54,13 @@ switch ($categor)
                             }
 
                             // TODO: Sacar $totAlu y ademas nuevo array asociativo $data!!!
-                            $resultado = sacaCamposItacaAlu($nomfich, $tipo);
-                            $totAlu = $resultado[0];
-                            $data = $resultado[1];
+                            $temp = sacaCamposItacaAlu($nomfich, $tipo);
+                            $totAlu = $temp[0];
+                            $dataAlu = $temp[1];
 
-                            $totProf = sacaCamposItacaProf($nomfich);
+                            $temp = sacaCamposItacaProf($nomfich);
+			    $totProf = $temp[0];
+			    $dataProf = $temp[1];
                         }
 
                     }
@@ -113,12 +115,12 @@ switch ($categor)
                         $tipo_user = "A";
                     }
                     //Importamos datos alumnos
-                    $resul_comp = inserta_datos($vacia, $referencia, $totAlu, $camposAlu, $dbh, $idused, $lang, $tipo_user, $data);
+                    $resul_comp = inserta_datos($vacia, $referencia, $totAlu, $camposAlu, $dbh, $idused, $lang, $tipo_user, $dataAlu);
 
                     //Importamos datos profesores;
                     $camposProf = (count($totProf)) - 1;
                     $tipo_user = "P";
-                    $resul_prof = inserta_datos($vacia, 24, $totProf, $camposProf, $dbh, $idused, $lang, $tipo_user, null);
+                    $resul_prof = inserta_datos($vacia, 24, $totProf, $camposProf, $dbh, $idused, $lang, $tipo_user, $dataProf);
                     $contR = $resul_comp[1] + $resul_prof[1];
                     $contAct = $resul_comp[2] + $resul_prof[2];
 
