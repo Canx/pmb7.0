@@ -657,7 +657,11 @@ class subcollection {
 	//---------------------------------------------------------------
 	public static function update_index($id, $datatype = 'all') {
 		indexation_stack::push($id, TYPE_SUBCOLLECTION, $datatype);
-		
+		//-------------------INI 13/04/2022 LLIUREX Temp solution to fix a bug in indexation-----------------------------------
+		$indexation_authority = indexations_collection::get_indexation(AUT_TABLE_SUB_COLLECTIONS);
+		$indexation_authority->maj($id, $datatype);
+		//------------------FIN 13/04/2022-------------------------------------------------------------------------------------------------------------
+	
 		// On cherche tous les n-uplet de la table notice correspondant à cette sous-collection.
 		$query = "select distinct notice_id from notices where subcoll_id='".$id."'";
 		authority::update_records_index($query, 'subcollection');

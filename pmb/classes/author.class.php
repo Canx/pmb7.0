@@ -1144,7 +1144,11 @@ if (! defined('AUTEUR_CLASS')) {
 			global $dbh;
 			
 			indexation_stack::push($id, TYPE_AUTHOR, $datatype);
-			
+			//-------------------------INI 13/04/2022 LLIUREX Temp solution to fix bug in indexation-----------------------------------------
+			$indexation_authority = indexations_collection::get_indexation(AUT_TABLE_AUTHORS);
+			$indexation_authority->maj($id, $datatype);
+			//-------------------------FIN 13/04/2022----------------------------------------------------------------------------------------------------------------
+
 			// On cherche tous les n-uplet de la table notice correspondant à cet auteur.
 			$query = "select distinct responsability_notice as notice_id from responsability where responsability_author='" .$id ."'";
 			authority::update_records_index($query, 'author');

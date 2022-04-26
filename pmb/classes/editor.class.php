@@ -694,8 +694,11 @@ class editeur {
 	//---------------------------------------------------------------
 	public static function update_index($id, $datatype = 'all') {
 		indexation_stack::push($id, TYPE_PUBLISHER, $datatype);
-		
-		// On cherche tous les n-uplet de la table notice correspondant a cet éditeur.
+		//---------INI 13/04/2022-----LLIUREX Temp solution to fix indexation bug---------------------------
+		$indexation_authority = indexations_collection::get_indexation(AUT_TABLE_PUBLISHERS);
+		$indexation_authority->maj($id, $datatype);
+		//--------FIN 13/04/2022---------------------------------------------------------------------------------------------------------------------------
+		//On cherche tous les n-uplet de la table notice correspondant a cet éditeur.
 		$query = "select distinct notice_id from notices where ed1_id='".$id."' OR ed2_id='".$id."'";
 		authority::update_records_index($query, 'publisher');
 	}

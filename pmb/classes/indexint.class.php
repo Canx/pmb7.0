@@ -577,6 +577,11 @@ class indexint {
 	public static function update_index($id, $datatype = 'all') {
 		indexation_stack::push($id, TYPE_INDEXINT, $datatype);
 		
+		//--------------------INI 13/04/2022 LLIUREX Temp solution to fix bug in indexation-----------------------------------------------
+		$indexation_authority = indexations_collection::get_indexation(AUT_TABLE_INDEXINT);
+		$indexation_authority->maj($id, $datatype);
+		//--------------------FIN 13/04/2022------------------------------------------------------------------------------------------------------------
+			
 		// On cherche tous les n-uplet de la table notice correspondant à cette index. décimale.
 		$query = "select distinct notice_id from notices where indexint='".$id."'";
 		authority::update_records_index($query, 'indexint');

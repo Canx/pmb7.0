@@ -359,6 +359,9 @@ class index_concept {
 				switch($row->type_object){
 					case TYPE_NOTICE :
 						indexation_stack::push($row->num_object, TYPE_NOTICE, "concept");
+						//-------------------INI 13/04/2022 LLIUREX Temp solution to fix bug in indexation---------
+						notice::majNoticesMotsGlobalIndex($row->num_object,"concept");
+						//-------------------FIN 13/04/2022--------------------------------------------------------------------------------------
 						break;
 					case TYPE_AUTHOR :
 						auteur::update_index($row->num_object,"concept");

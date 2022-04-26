@@ -696,6 +696,11 @@ class tu_notice {
 		while(($mesNotices = pmb_mysql_fetch_object($found))) {
 			$notice_id = $mesNotices->ntu_num_notice;
 			indexation_stack::push($notice_id, TYPE_NOTICE);
+			//-------------INI 13/04/2022 LLIUREX Temp solution to fix a bug in indexation-------------
+			notice::majNoticesGlobalIndex($notice_id);
+			notice::majNoticesMotsGlobalIndex($notice_id);
+			//-------------FIN 13/04/2022--------------------------------------------------------------
+
 		}
 	}
 	

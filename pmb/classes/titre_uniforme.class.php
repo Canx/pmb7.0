@@ -2340,7 +2340,12 @@ class titre_uniforme {
 	//---------------------------------------------------------------
 	public static function update_index($id, $datatype = 'all') {
 		indexation_stack::push($id, TYPE_TITRE_UNIFORME, $datatype);
-		
+		//---------------------------INI 13/04/2022 LLIUREX Temp solution to fix bug in indexation---------------------
+		$indexation_authority = indexations_collection::get_indexation(AUT_TABLE_TITRES_UNIFORMES);
+		$indexation_authority->set_deleted_index(static::$deleted_index);
+		$indexation_authority->maj($id, $datatype);
+		//--------------------------FIN 13/04/2022-----------------------------------------------------------------------------------------------
+
 		// On cherche tous les n-uplet de la table notice correspondant à ce titre_uniforme.
 		$query = "select distinct ntu_num_notice as notice_id from notices_titres_uniformes where ntu_num_tu = ".$id;
 		authority::update_records_index($query, 'uniformtitle');

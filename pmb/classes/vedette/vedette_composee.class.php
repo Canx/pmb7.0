@@ -340,6 +340,9 @@ class vedette_composee {
 					if($result && pmb_mysql_num_rows($result)){
 						while($row = pmb_mysql_fetch_object($result)){
 							indexation_stack::push($row->num_object, TYPE_NOTICE, "concept");
+							//---------------------INI 13/04/2002 LLIUREX Temp solution to fix a bug in indexation-----------------------
+							notice::majNoticesMotsGlobalIndex($row->num_object,"concept");
+							//---------------------FIN 13/04/2022------------------------------------------------------------------------------------------------
 						}
 					}
 					break;

@@ -10,7 +10,7 @@ require_once ("$base_path/includes/init.inc.php");
 $temp="$base_path/temp/";//lo metemos en el temporal del pmb
 $fich="copia_seg_pmb".rand().".sql";//auto nombre
 
-$comando= "mysqldump -u ". USER_NAME ." --password=". USER_PASS ." --opt --hex-blob ". DATA_BASE . " >" .$temp.$fich;
+$comando= "mysqldump -u ". USER_NAME ." --host=". SQL_SERVER . " --password=". USER_PASS ." --opt --hex-blob ". DATA_BASE . " >" .$temp.$fich;
 
 if (system($comando, $salida)==0){
 echo "$msg[exporta_a]";

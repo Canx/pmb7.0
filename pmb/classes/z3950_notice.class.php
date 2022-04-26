@@ -649,6 +649,15 @@ class z3950_notice {
 		
 	
 		indexation_stack::push($notice_retour, TYPE_NOTICE);
+		//-------------------------INI 13/04/2022 LLIUREX Temp solution to fix indexation bug----------------------------------------
+		// Mise à jour des index de la notice
+		notice::majNotices($notice_retour);
+		// Mise à jour de la table notices_global_index
+		notice::majNoticesGlobalIndex($notice_retour);
+		// Mise à jour de la table notices_mots_global_index
+		notice::majNoticesMotsGlobalIndex($notice_retour);
+		//Calcul de la signature
+		//---------------------FIN 22/04/2022 --------------------------------------------------------------------------------------------------------------
 		
 		//Calcul de la signature
 		$sign= new notice_doublon();

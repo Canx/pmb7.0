@@ -679,7 +679,11 @@ class collection {
 	//---------------------------------------------------------------
 	public static function update_index($id, $datatype = 'all') {
 		indexation_stack::push($id, TYPE_COLLECTION, $datatype);
-		
+		//--------------------INI 13/04/2022 LLIUREX Temp solution to fix bug in indexation------------------------------------
+		$indexation_authority = indexations_collection::get_indexation(AUT_TABLE_COLLECTIONS);
+		$indexation_authority->maj($id, $datatype);
+		//--------------------FIN 13/04/2022------------------------------------------------------------------------------------------------------
+
 		// On cherche tous les n-uplet de la table notice correspondant à cette collection.
 		$query = "select distinct notice_id from notices where coll_id='".$id."'";
 		authority::update_records_index($query, 'collection');

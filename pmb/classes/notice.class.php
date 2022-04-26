@@ -2898,6 +2898,13 @@ require_once($class_path.'/event/events/event_record.class.php');
 		public static function majNoticesTotal($notice){	
 			$info=static::indexation_prepare($notice);
 			indexation_stack::push($notice, TYPE_NOTICE);
+			//-------------INI 13/04/2022 LLIUREX Temp solution to fix a bug in indexation-------------------
+			notice::majNotices($notice);
+			notice::majNoticesGlobalIndex($notice);
+			notice::majNoticesMotsGlobalIndex($notice);
+			notice::indexation_restaure($info);
+			//-------------FIN 13/04/2022-------------------------------------------------------------------
+
 			static::indexation_restaure($info);
 		}
 		

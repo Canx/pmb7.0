@@ -379,6 +379,12 @@ class onto_handler {
 				print "<pre>";print_r($query);print "<br/>";print_r($errs);print "</pre><br>";
 			}else{
 				indexation_stack::push($item->get_id(), TYPE_CONCEPT);
+				//-------------------INI 13/04/2022 LLIUREX Temp solution to fix a bug in indexation-----------
+				$onto_index = onto_index::get_instance($this->get_onto_name());
+				$onto_index->set_handler($this);
+				$onto_index->maj(0, $item->get_uri());
+				//-------------------FIN 13/04/2022-----------------------------------------------------------------------------------------
+
 			}
 		} else {
 			return $item->get_checking_errors();

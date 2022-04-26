@@ -1238,6 +1238,10 @@ class authority {
 		if (count($notices_ids)) {
 			foreach ($notices_ids as $notice_id) {
 				indexation_stack::push($notice_id, TYPE_NOTICE, $datatype);
+				//-------------------INI 13/04/2022 LLIUREX Temp solution to fix bug in indexation-------------------
+				notice::majNoticesGlobalIndex($notice_id);
+				notice::majNoticesMotsGlobalIndex($notice_id, $datatype);
+				//------------------FIN 13/04/2022-----------------------------------------------------------------------------------
 			}
 		}
 	}
